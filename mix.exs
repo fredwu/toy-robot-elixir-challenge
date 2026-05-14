@@ -4,7 +4,7 @@ defmodule ToyRobotElixir.Mixfile do
   def project do
     [app: :toy_robot_elixir,
      version: "0.0.1",
-     elixir: "~> 1.19",
+     elixir: "~> 1.14",
      deps: deps()]
   end
 
