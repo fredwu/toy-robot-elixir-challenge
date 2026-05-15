@@ -1,46 +1,54 @@
 defmodule ToyRobotElixir.Robot do
   @moduledoc """
-  Robot state and movement operations for the Toy Robot simulator.
+  Robot data and low-level movement helpers for the fleet simulator.
   """
 
-  @type direction :: :north | :east | :south | :west
+  @type direction :: ToyRobotElixir.Command.direction()
+  @type id :: String.t()
+
   @type t :: %__MODULE__{
-          x: integer() | nil,
-          y: integer() | nil,
-          direction: direction() | nil
+          id: id(),
+          x: non_neg_integer(),
+          y: non_neg_integer(),
+          direction: direction(),
+          energy: non_neg_integer()
         }
 
-  defstruct x: nil, y: nil, direction: nil
+  defstruct id: nil,
+            x: nil,
+            y: nil,
+            direction: nil,
+            energy: 0
 
   @doc """
-  Returns a robot that has not yet been placed on the table.
+  Builds a robot value after placement validation has succeeded.
   """
-  @spec new() :: t()
-  def new, do: %__MODULE__{}
+  @spec new(id(), non_neg_integer(), non_neg_integer(), direction(), non_neg_integer()) ::
+          t() | :not_implemented
+  def new(_id, _x, _y, _direction, _energy), do: not_implemented()
 
   @doc """
-  Places the robot on the table when the coordinates and direction are valid.
+  Returns the coordinate one step ahead of the robot without changing state.
   """
-  def place(_robot, _x, _y, _direction), do: not_implemented()
+  @spec forward_coordinate(t()) :: {non_neg_integer(), non_neg_integer()} | :not_implemented
+  def forward_coordinate(_robot), do: not_implemented()
 
   @doc """
-  Moves the robot one unit forward, ignoring moves that would leave the table.
+  Rotates the robot left by the requested number of quarter turns.
   """
-  def move(_robot), do: not_implemented()
+  @spec left(t(), pos_integer()) :: t() | :not_implemented
+  def left(_robot, _turns \\ 1), do: not_implemented()
 
   @doc """
-  Rotates the robot 90 degrees to the left.
+  Rotates the robot right by the requested number of quarter turns.
   """
-  def left(_robot), do: not_implemented()
+  @spec right(t(), pos_integer()) :: t() | :not_implemented
+  def right(_robot, _turns \\ 1), do: not_implemented()
 
   @doc """
-  Rotates the robot 90 degrees to the right.
+  Formats a report line as `id:x,y,DIRECTION,energy`.
   """
-  def right(_robot), do: not_implemented()
-
-  @doc """
-  Reports the robot as `X,Y,DIRECTION`, or `nil` when it is not on the table.
-  """
+  @spec report(t()) :: String.t() | :not_implemented
   def report(_robot), do: not_implemented()
 
   defp not_implemented do

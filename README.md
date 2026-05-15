@@ -1,24 +1,38 @@
-# Toy Robot Elixir
+# Robot Fleet Simulator
 
-The Toy Robot code test done in Elixir. Please see [PROBLEM.md](PROBLEM.md) for more information.
+An Elixir coding challenge based on a much harder version of the classic toy
+robot problem. See [PROBLEM.md](PROBLEM.md) for the full specification.
 
-## Prerequisite
+## Prerequisites
 
 - Erlang
 - Elixir
 
-## Expectation: Run the code
+## Expected API
 
-    iex -S mix
+```elixir
+ToyRobotElixir.run("""
+ARENA 5,5
+PLACE scout 0,0,NORTH,2
+MOVE scout 1
+REPORT scout
+""")
 
-    # examples
+# => ["scout:0,1,NORTH,1"]
+```
 
-    iex> place 0, 0, :north
-    iex> move
-    iex> left
-    iex> move
-    iex> report
+The parser is also part of the public contract:
+
+```elixir
+ToyRobotElixir.Command.parse("PLACE scout 1,2,EAST,9")
+# => {:ok, {:place, "scout", 1, 2, :east, 9}}
+```
 
 ## Run Tests
 
-    mix test
+```bash
+mix test
+```
+
+The repository is intentionally a skeleton. The public tests describe a subset
+of the required behavior and will fail until the simulator is implemented.
